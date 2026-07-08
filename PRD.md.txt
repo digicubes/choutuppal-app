@@ -1,0 +1,63 @@
+Project: Choutuppal (choutuppal.in)
+
+Version: 2.0 (Supabase Migration)
+Date: [Current Date]
+Platform: Web (Mobile-First PWA)  
+1. Product Vision & Objective
+
+Vision: తెలంగాణ రాష్ట్రంలోని పట్టణాలు మరియు నగరాల (Choutuppal, Hyderabad, Yadadri, etc.) కోసం ఒక హైపర్-లోకల్ ప్లాట్‌ఫారమ్. 
+Objective: యూజర్లకు లోకల్ బిజినెస్స్ లిస్టింగ్స్, రియల్ ఎస్టేట్, రాజకీయ నాయకుల ప్రొఫైల్స్, మరియు లోకల్ న్యూస్/షార్ట్స్ ని ఒకే యాప్ లో అందించడం.
+2. Target Audience & User Roles
+
+    Guest: లాగిన్ చేయని యూజర్ (కేవలం కంటెంట్ చూడొచ్చు).
+    User: లాగిన్ చేసిన సాధారణ యూజర్ (లిస్టింగ్స్ చూడొచ్చు, సేవ్ చేయొచ్చు, కాంటాక్ట్ చేయొచ్చు).
+    Agent/Business: వ్యాపారాలు లేదా సర్వీస్ ప్రొవైడర్లు (ప్రీమియం లిస్టింగ్స్ పోస్ట్ చేయొచ్చు).
+    City Admin: ఒక నిర్దిష్ట సిటీ కంటెంట్ ని మేనేజ్ చేసే అడ్మిన్.
+    Super Admin: మొత్తం ప్లాట్‌ఫారమ్ ని కంట్రోల్ చేసే అధికారి.
+
+3. Core Features (Functional Requirements)
+3.1. City Routing & Visibility
+
+     Path Routing (Default): /city/[slug] (e.g., /city/choutuppal).
+     Subdomain Routing (Future): [slug].choutuppal.in.
+     City Visibility Manager: సూపర్ అడ్మిన్ ఏ సిటీ హోమ్ పేజీలో కనిపించాలో టాగిల్ చేయగలగాలి.
+
+3.2. Authentication & User Profiles
+
+     Supabase Auth: Phone OTP / Email Magic Link.
+     Auto Profile Creation: సైనప్ అయిన వెంటనే profiles టేబుల్ లో యూజర్ రోల్ (User) క్రియేట్ అవ్వాలి.
+     Profiles: ఇండివిడువల్ (బిజినెస్/ప్రొఫెషనల్) మరియు పొలిటికల్ లీడర్స్ కి వేర్వేరు డిజైన్లు.
+
+3.3. Listings & Real Estate
+
+     Categories: రెస్టారెంట్స్, జాబ్స్, సర్వీసెస్, హెల్త్, ఎడ్యుకేషన్.
+     Listing Action Bar: స్టిక్కీ బార్ (Call, WhatsApp Customized Text, Location).
+     Real Estate: ప్రత్యేక సెక్షన్ మరియు ఫిల్టర్లు.
+
+3.4. Super Admin Dashboard (ప్లాట్‌ఫారమ్ కంట్రోల్)
+
+     Feature Toggles (Kill Switches): Payments, Shorts, Listings, Real Estate, Spin & Win, Blog, Maintenance Mode.
+     City Manager: సిటీలను Add/Edit/Delete చేయడం, Priority సెట్ చేయడం.
+     Domain & Routing: బేస్ డొమైన్ (choutuppal.in) సెటప్, Path vs Subdomain ఎంపిక.
+     Coupon Manager: 100% Free Launch Coupon (LAUNCH100), Discount types.
+     Push Notifications: సిటీ-స్పెసిఫిక్ నోటిఫికేషన్లు.
+
+3.5. Monetization (Payments)
+
+     Razorpay Integration: Test mode ready.
+     Free Launch Strategy: సూపర్ అడ్మిన్ "Enable Payment Gateway" ఆఫ్ చేస్తే యూజర్ కి పేమెంట్ పేజీ కనిపించకుండా ఫ్రీగా లిస్టింగ్ చేయించడం.
+
+4. Technical Architecture (Target State)
+
+     Frontend: Next.js 14 (App Router), TypeScript, Tailwind CSS, Shadcn UI.
+     Backend & Database: Supabase (PostgreSQL, Auth, Storage, Realtime).
+     State Management: Zustand (Client) + Supabase Realtime (Server).
+     Animations: NO Framer Motion (Causes Hydration errors). Strictly CSS Transitions.
+     PWA: next-pwa, VAPID keys for Web Push.
+     Payments: Razorpay Node SDK.
+
+5. Non-Functional Requirements
+
+     Mobile-First Design: బాటమ్ నావిగేషన్, స్టిక్కీ హెడర్స్.
+     Zero Hydration Errors: SSR మరియు CSR DOM ఖచ్చితంగా మ్యాచ్ అవ్వాలి.
+     Security: Admin API రౌట్స్ లో Supabase Auth తప్పనిసరు. RLS policies డేటాబేస్ లో ఉండాలి.
