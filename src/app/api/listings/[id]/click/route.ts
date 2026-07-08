@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { type } = await request.json()
+    const resolvedParams = await params
     
     let updateData = {}
     if (type === 'whatsapp') updateData = { whatsappClicks: { increment: 1 } }
@@ -12,7 +13,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
 
     if (Object.keys(updateData).length > 0) {
       await prisma.listing.update({
-        where: { id: params.id },
+        where: { id: resolvedParams.id },
         data: updateData
       })
     }

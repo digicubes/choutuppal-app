@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { db as prisma } from '@/lib/db'
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { followerId } = await req.json()
-    const followingId = params.id
+    const resolvedParams = await params
+    const followingId = resolvedParams.id
 
     if (!followerId || !followingId) {
       return NextResponse.json({ error: 'Missing ids' }, { status: 400 })
@@ -35,11 +36,12 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { searchParams } = new URL(req.url)
     const followerId = searchParams.get('followerId')
-    const followingId = params.id
+    const resolvedParams = await params
+    const followingId = resolvedParams.id
 
     if (!followerId || !followingId) {
       return NextResponse.json({ error: 'Missing ids' }, { status: 400 })
