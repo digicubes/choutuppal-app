@@ -39,8 +39,8 @@ export function FeaturedProfiles() {
         </div>
       </div>
 
-      {/* ── Grid of Profile Cards ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {/* ── Grid/Scroll of Profile Cards ── */}
+      <div className="flex sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-x-auto pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {profiles.map((user) => {
           const isLeader = user.role === 'city_admin' || user.role === 'super_admin' || user.role === 'agent'
           const name = user.fullName || 'User'
@@ -52,7 +52,7 @@ export function FeaturedProfiles() {
             <Link
               key={user.id}
               href={`/profile/${user.id}`}
-              className="bg-white/20 backdrop-blur-lg border border-white/30 shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl group relative"
+              className="w-[280px] shrink-0 sm:w-auto sm:shrink-1 snap-center bg-white/20 backdrop-blur-lg border border-white/30 shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl group relative"
             >
               {/* Featured Badge */}
               <div className="absolute top-2 right-2 bg-black/30 text-yellow-400 text-xs font-bold px-2 py-1 rounded-full backdrop-blur-md z-10">
